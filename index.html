@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой канал</title>
+    <title>GDTuBe</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
     <style>
@@ -211,7 +211,6 @@
             display: block;
         }
 
-        /* Анимация при наведении — как на YouTube */
         .video-card .thumbnail .hover-play {
             position: absolute;
             top: 0;
@@ -242,7 +241,6 @@
             z-index: 2;
         }
 
-        /* Бейдж "Наведи" */
         .video-card .thumbnail .play-hint {
             position: absolute;
             top: 50%;
@@ -372,24 +370,6 @@
         </div>
     </nav>
 
-    <!-- ===== ШАПКА КАНАЛА ===== -->
-    <div class="channel-header">
-        <div class="channel-info">
-            <img src="https://i.pinimg.com/736x/2e/99/2d/2e992d1138c6f58ea28151f874b0a5cf.jpg" alt="avatar" class="channel-avatar" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23333%22/%3E%3Ccircle cx=%2250%22 cy=%2235%22 r=%2220%22 fill=%22%23555%22/%3E%3Ccircle cx=%2250%22 cy=%2275%22 r=%2225%22 fill=%22%23555%22/%3E%3C/svg%3E'">
-
-            <div>
-                <div class="channel-name">nar1</div>
-                <div class="channel-handle">@nar1</div>
-                <div class="channel-stats">
-                    <span><i class="fas fa-users"></i> 1.2 тыс. подписчиков</span>
-                    <span style="margin-left:12px;"><i class="fas fa-video"></i> 1 видео</span>
-                </div>
-            </div>
-
-            <button class="subscribe-btn" id="subscribeBtn">Подписаться</button>
-        </div>
-    </div>
-
     <!-- ===== ВКЛАДКИ ===== -->
     <div class="channel-tabs">
         <a href="#" class="active">Видео</a>
@@ -401,15 +381,29 @@
     <!-- ===== СЕТКА ВИДЕО ===== -->
     <div class="video-grid">
 
-        <!-- ВИДЕО 1: Orbit 77% (YouTube превью, но клик не открывает) -->
+        <!-- ВИДЕО 1: Orbit 100% (ID: JdMtdwCV9kU) -->
         <div class="video-card">
             <div class="thumbnail">
-                <!-- Основная превьюшка -->
+                <img src="https://img.youtube.com/vi/JdMtdwCV9kU/maxresdefault.jpg" alt="Orbit 100%">
+                <img src="https://img.youtube.com/vi/JdMtdwCV9kU/hqdefault.jpg" alt="hover" class="hover-play">
+                <span class="play-hint"><i class="fas fa-play"></i> Наведи</span>
+                <span class="duration">0:30</span>
+            </div>
+            <div class="video-info">
+                <img src="https://i.pinimg.com/736x/2e/99/2d/2e992d1138c6f58ea28151f874b0a5cf.jpg" alt="avatar" class="mini-avatar" onerror="this.style.background='#444'">
+                <div class="details">
+                    <div class="title">✨ ORBIT 100% // WTF FLUCKED FROM 77% ✨</div>
+                    <div class="channel-name">nar1</div>
+                    <div class="meta" id="views1">⏳ Загрузка...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ВИДЕО 2: Orbit 77% (ID: 3MDRkXsz62Q) -->
+        <div class="video-card">
+            <div class="thumbnail">
                 <img src="https://img.youtube.com/vi/3MDRkXsz62Q/maxresdefault.jpg" alt="Orbit 77%">
-                
-                <!-- Вторая превьюшка (другой кадр) — при наведении -->
                 <img src="https://img.youtube.com/vi/3MDRkXsz62Q/hqdefault.jpg" alt="hover" class="hover-play">
-                
                 <span class="play-hint"><i class="fas fa-play"></i> Наведи</span>
                 <span class="duration">0:22</span>
             </div>
@@ -418,7 +412,7 @@
                 <div class="details">
                     <div class="title">🔥 ORBIT 77% // РЕАКЦИЯ ПОСЛЕ СЛИВА</div>
                     <div class="channel-name">nar1</div>
-                    <div class="meta">1.2 тыс. просмотров • 1 дня назад</div>
+                    <div class="meta" id="views2">⏳ Загрузка...</div>
                 </div>
             </div>
         </div>
@@ -435,9 +429,9 @@
             <div class="video-info">
                 <img src="https://i.pinimg.com/736x/2e/99/2d/2e992d1138c6f58ea28151f874b0a5cf.jpg" alt="avatar" class="mini-avatar">
                 <div class="details">
-                    <div class="title">НАЗВАНИЕ</div>
+                    <div class="title">НАЗВАНИЕ ВИДЕО</div>
                     <div class="channel-name">nar1</div>
-                    <div class="meta">просмотров • дата</div>
+                    <div class="meta" id="viewsX">⏳ Загрузка...</div>
                 </div>
             </div>
         </div>
@@ -455,7 +449,58 @@
                 this.textContent = 'Подписаться';
             }
         });
+
+        // ===== РАНДОМНЫЕ ПРОСМОТРЫ =====
+        function randomViews() {
+            const formats = [
+                // тысячи
+                () => (Math.floor(Math.random() * 9) + 1) + '.' + Math.floor(Math.random() * 9) + ' тыс. просмотров',
+                // десятки тысяч
+                () => Math.floor(Math.random() * 9) + Math.floor(Math.random() * 9) + '.' + Math.floor(Math.random() * 9) + ' тыс. просмотров',
+                // сотни тысяч
+                () => Math.floor(Math.random() * 9) + Math.floor(Math.random() * 9) + Math.floor(Math.random() * 9) + '.' + Math.floor(Math.random() * 9) + ' тыс. просмотров',
+                // миллионы
+                () => (Math.floor(Math.random() * 9) + 1) + '.' + Math.floor(Math.random() * 9) + ' млн просмотров'
+            ];
+
+            const format = formats[Math.floor(Math.random() * formats.length)];
+            return format();
+        }
+
+        function randomDays() {
+            const days = [
+                'сегодня',
+                '1 день назад',
+                '2 дня назад',
+                '3 дня назад',
+                '4 дня назад',
+                '5 дней назад',
+                '6 дней назад',
+                '1 неделю назад',
+                '2 недели назад'
+            ];
+            return days[Math.floor(Math.random() * days.length)];
+        }
+
+        function updateViews() {
+            const views1 = document.getElementById('views1');
+            const views2 = document.getElementById('views2');
+
+            if (views1) {
+                views1.textContent = randomViews() + ' • ' + randomDays();
+            }
+            if (views2) {
+                views2.textContent = randomViews() + ' • ' + randomDays();
+            }
+        }
+
+        // Обновляем при загрузке
+        updateViews();
+
+        // И каждые 5 секунд меняем (чтобы при обновлении страницы всегда было разное)
+        setInterval(updateViews, 5000);
     </script>
 
 </body>
+</html>
 </html>
