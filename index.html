@@ -1,389 +1,199 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>YouTube Clone</title>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="style.css">
-        <link rel="shortcut icon" href="assets/logo.svg" type="image/x-icon">
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои прогрессы</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background: #0f0f0f !important;
+        }
+        .video-card {
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .video-card:hover {
+            transform: scale(1.02);
+        }
+        .video-card img {
+            width: 100%;
+        }
+        .video-card .card-title {
+            color: #fff;
+            font-weight: 500;
+        }
+        .video-card .video-stats {
+            color: #aaa;
+            font-size: 14px;
+        }
+        .video-card .channel-icon img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .navbar {
+            background: #1a1a1a !important;
+            border-bottom: 1px solid #333;
+        }
+        #logo {
+            color: #fff !important;
+        }
+        .sidebar {
+            background: #1a1a1a;
+        }
+        .sidebar .nav-link {
+            color: #aaa;
+        }
+        .sidebar .nav-link:hover {
+            background: #333;
+            color: #fff;
+        }
+        .sidebar .nav-link.active {
+            color: #fff;
+            background: #333;
+        }
+        .sidebar .nav-link i {
+            color: #aaa;
+        }
+        .sidebar .nav-link.active i {
+            color: #fff;
+        }
+        .sidebar .text-muted {
+            color: #666 !important;
+        }
+        .theme-toggle {
+            color: #fff;
+            border: none;
+            background: transparent;
+        }
+        #video-create a {
+            color: #fff !important;
+        }
+        #icon-button2, #icon-button3 {
+            color: #fff !important;
+        }
+        .nav-footer a {
+            color: #666 !important;
+        }
+        .search-bar input {
+            background: #121212;
+            border-color: #333;
+            color: #fff;
+        }
+        .search-bar input::placeholder {
+            color: #666;
+        }
+        .search-bar button {
+            background: #222;
+            border-color: #333;
+            color: #aaa;
+        }
+        .search-bar button:hover {
+            background: #333;
+        }
+    </style>
+</head>
+<body>
 
-    </head>
-    <body>
-        <nav class="navbar navbar-light bg-white fixed-top border-bottom">
-            <div class="container-fluid">
-                <div class="d-flex align-items-center">
-                    <button class="btn" type="button" id="toggleButton1">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                    <a class="navbar-brand ms-3 d-flex align-items-center" href="index.html">
-                        <img src="assets/logo.svg" alt="YouTube Logo">
-                        <span class="h3 mb-0 ms-1" id="logo"> YouTube</span>
-                    </a>
-                </div>
-                
-                <div class="search-bar mx-auto search-bar-big" >
-                    <div class="input-group" >
-                        <input type="text" class="form-control" placeholder="Search">
-                        <button class="btn btn-outline-secondary" type="button">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-                <!-- searchbar mobile -->
-                <div class="yt-search-container">
-                    <input type="text" class="yt-search-input" placeholder="Search">
-                    <button class="yt-search-icon">
+    <!-- Navbar -->
+    <nav class="navbar navbar-light fixed-top border-bottom">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center">
+                <button class="btn text-white" type="button" id="toggleButton1">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand ms-3 d-flex align-items-center" href="index.html">
+                    <span class="h3 mb-0 ms-1 text-white" id="logo">🎯 My Progress</span>
+                </a>
+            </div>
+            
+            <div class="search-bar mx-auto search-bar-big">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <button class="btn btn-outline-secondary" type="button">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
-
-                <!-- --- -->
-                
-                <div class="d-flex align-items-center">
-                    <button class="theme-toggle fs-4" id="themeToggle">
-                        <i  class="fas fa-sun" id="themeIcon"></i>
-                    </button>   
-                    <button class="btn  fs-4" type="button" id="hideonmobile1">
-                        <a class="text-decoration-none text-black fw-medium d-flex justify-content-between align-items-center" id="video-create" href="sign-in.html"><i class="fa-solid fa-plus"></i> Create</a>
-                    </button>
-                    <button class="btn fs-4" type="button" id="hideonmobile2">
-                       <a  class="text-decoration-none text-black" href="sign-in.html"> <i id="icon-button2" class="fa-regular fa-bell"></i></a>
-                    </button>
-                    <button class="btn fs-4" type="button" id="hideonmobile3">
-                      <a  class="text-decoration-none text-black" href="sign-in.html"> <i id="icon-button3" class="fa-regular fa-circle-user"></i></a>
-                    </button>
-                </div>
             </div>
+
+            <div class="d-flex align-items-center">
+                <button class="theme-toggle fs-4" id="themeToggle">
+                    <i class="fas fa-sun" id="themeIcon"></i>
+                </button>   
+                <button class="btn fs-4 text-white" type="button">
+                    <i class="fa-regular fa-circle-user"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="sidebar border-end">
+        <nav class="nav flex-column">
+            <a class="nav-link active" href="index.html">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a class="nav-link" href="#">
+                <i class="fas fa-trophy"></i>
+                <span>Прогрессы</span>
+            </a>
+            <hr>
+            <a class="nav-link" href="#">
+                <i class="fas fa-history"></i>
+                <span>История</span>
+            </a>
         </nav>
+    </div>
 
-
-        <div class="sidebar border-end">
-            <nav class="nav flex-column">
-                <a class="nav-link active" href="index.html">
-                    <i class="fas fa-home"></i>
-                    <span>Home</span>
-                </a>
-                <a class="nav-link" href="https://www.youtube.com/feed/trending">
-                    <i class="fas fa-compass"></i>
-                    <span>Explore</span>
-                </a>
-                <a class="nav-link" href="https://www.youtube.com/shorts">
-                    <i class="fas fa-play-circle"></i>
-                    <span>Shorts</span>
-                </a>
-                <a class="nav-link" href="sign-in.html">
-                    <i class="fas fa-tv"></i>
-                    <span>Subscriptions</span>
-                </a>
-                <hr>
-                <a class="nav-link" href="sign-in.html">
-                    <i class="fas fa-photo-video"></i>
-                    <span>Library</span>
-                </a>
-                <a class="nav-link" href="sign-in.html">
-                    <i class="fas fa-history"></i>
-                    <span>History</span>
-                </a>
-                <a class="nav-link" href="sign-in.html">
-                    <i class="fas fa-clock"></i>
-                    <span>Watch Later</span>
-                </a>
-                <a class="nav-link" href="sign-in.html">
-                    <i class="fas fa-thumbs-up"></i>
-                    <span>Liked Videos</span>
-                </a>
-                <hr>
-        
-                <a class="nav-link" href="sign-in.html">
-                    <i class="fas fa-cog"></i>
-                    <span>Settings</span>
-                </a>
-                <a class="nav-link" href="sign-in.html">
-                    <i class="fas fa-flag"></i>
-                    <span>Report History</span>
-                </a>
-                <a class="nav-link" href="sign-in.html">
-                    <i class="fas fa-question-circle"></i>
-                    <span>Help</span>
-                </a>
-                <a class="nav-link" href="sign-in.html">
-                    <i class="fas fa-comment-alt"></i>
-                    <span>Send Feedback</span>
-                </a>
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="row g-4">
                 
-                <hr>
-                
-                <div class="nav-footer small px-3">
-                    <div class="mb-2">
-                        <a href="#" class="text-muted text-decoration-none me-2">About</a>
-                        <a href="#" class="text-muted text-decoration-none me-2">Press</a>
-                        <a href="#" class="text-muted text-decoration-none me-2">Copyright</a>
-                        <a href="#" class="text-muted text-decoration-none me-2">Contact us</a>
-                        <a href="#" class="text-muted text-decoration-none me-2">Creators</a>
-                        <a href="#" class="text-muted text-decoration-none me-2">Advertise</a>
-                        <a href="#" class="text-muted text-decoration-none">Developers</a>
-                    </div>
-                    <div class="mb-2">
-                        <a href="#" class="text-muted text-decoration-none me-2">Terms</a>
-                        <a href="#" class="text-muted text-decoration-none me-2">Privacy</a>
-                        <a href="#" class="text-muted text-decoration-none me-2">Policy & Safety</a>
-                        <a href="#" class="text-muted text-decoration-none me-2">How YouTube works</a>
-                        <a href="#" class="text-muted text-decoration-none">Test new features</a>
-                    </div>
-                    <div class="text-muted">
-                        © 2025 junaid LLC
+                <!-- ТВОЁ ВИДЕО - ORBIT 77% -->
+                <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                    <div class="video-card">
+                        <a href="https://www.youtube.com/watch?v=ТВОЙ_ID_ВИДЕО" class="text-decoration-none text-dark">
+                            <img src="https://img.youtube.com/vi/ТВОЙ_ID_ВИДЕО/maxresdefault.jpg" class="card-img-top" alt="Orbit 77%">
+                            <div class="card-body p-2">
+                                <div class="d-flex mt-2">
+                                    <div class="channel-icon me-2">
+                                        <img src="https://img.youtube.com/vi/ТВОЙ_ID_ВИДЕО/hqdefault.jpg" alt="">
+                                    </div>
+                                    <div>
+                                        <h6 class="card-title mb-1">🔥 ORBIT 77% // Fluked from 40%</h6>
+                                        <p class="card-text video-stats mb-0">ТвойНик</p>
+                                        <p class="card-text video-stats">1.2 тыс. просмотров • 2 дня назад</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
-            </nav>
-        </div>
 
-        
-        <div class="main-content">
-            <div class="container-fluid">
-                <div class="row g-4">
-                   
-                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                        <div class="video-card">
-                            <a href="https://www.youtube.com/watch?v=mMM8ZYbIYu4" class="text-decoration-none text-dark">
-                            <img src="assets/thumbnail5.jpg" class="card-img-top" alt="Video Thumbnail">
-                            <div class="card-body p-2">
-                                <div class="d-flex mt-2">
-                                    <div class="channel-icon me-2"><img src="assets/channel5.jpg" alt=""></div>
-                                    <div>
-                                        <h6 class="card-title mb-1">HTML Portfolio Project: Perfect for Beginners!</h6>
-                                        <p class="card-text video-stats mb-0">Code with Nidal</p>
-                                        <p class="card-text video-stats">8.2M views • 20 days ago</p></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                        <div class="video-card">
-                            <a href="https://www.youtube.com/watch?v=bny2NJkJGXc" class="text-decoration-none text-dark">
-                            <img src="assets/thumnail2.jpg" class="card-img-top" alt="Video Thumbnail">
-                            <div class="card-body p-2">
-                                <div class="d-flex mt-2">
-                                    <div class="channel-icon me-2"><img src="assets/channel2.jpg" alt=""></div>
-                                    <div>
-                                        <h6 class="card-title mb-1">We made MKBHD's Dream Phone</h6>
-                                        <p class="card-text video-stats mb-0">Nothing</p>
-                                        <p class="card-text video-stats">1.2M views • 3 days ago</p></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                        <div class="video-card">
-                            <a href="https://www.youtube.com/watch?v=undwfOwhVsw&t" class="text-decoration-none text-dark">
-                                <img src="assets/thumbnail1.jpg" class="card-img-top" alt="Video Thumbnail">
-                                <div class="card-body p-2">
-                                    <div class="d-flex mt-2">
-                                        <div class="channel-icon me-2"><img src="assets/channel1.jpg" alt="" width="100%"></div>
-                                        <div>
-                                            <h6 class="card-title mb-1">Samsung S25 Ultra vs iPhone 16 Pro Max</h6>
-                                            <p class="card-text video-stats mb-0">Mrwhosetheboss</p>
-                                            <p class="card-text video-stats">850K views • 1 week ago</p>
-                                        </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                        <div class="video-card">
-                            <a href="https://www.youtube.com/watch?v=GWmTs8--u64" class="text-decoration-none text-dark" >
-                            <img src="assets/thumnail3.jpg" class="card-img-top" alt="Video Thumbnail">
-                            <div class="card-body p-2">
-                                <div class="d-flex mt-2">
-                                    <div class="channel-icon me-2"><img src="assets/channel3.jpg" alt=""></div>
-                                    <div>
-                                        <h6 class="card-title mb-1">How Corrupt Influencers 🤬 Used the CIA to Target My Family / They kidnap my Father 😓</h6>
-                                        <p class="card-text video-stats mb-0">Talha Reviews ✓ </p>
-                                        <p class="card-text video-stats">2.5M views • 2 weeks ago</p></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                        <div class="video-card">
-                            <a href="https://www.youtube.com/watch?v=ALtGqSdt-4w" class="text-decoration-none text-dark" >
-                            <img src="assets/thumbnail7.jpg" class="card-img-top" alt="Video Thumbnail">
-                            <div class="card-body p-2">
-                                <div class="d-flex mt-2">
-                                    <div class="channel-icon me-2"><img src="assets/channlel7.jpg" alt=""></div>
-                                    <div>
-                                        <h6 class="card-title mb-1">Range Rover Evoque | Speed Bump</h6>
-                                        <p class="card-text video-stats mb-0">Land Rover
-                                            ✓ </p>
-                                        <p class="card-text video-stats">6.5M views • 2 weeks ago</p></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                        <div class="video-card">
-                            <a href="https://www.youtube.com/watch?v=frLFjqY9_nQ" class="text-decoration-none text-dark">
-                            <img src="assets/thumbnail4.jpg" class="card-img-top" alt="Video Thumbnail">
-                            <div class="card-body p-2">
-                                <div class="d-flex mt-2">
-                                    <div class="channel-icon me-2"><img src="assets/channle4.jpg" alt=""></div>
-                                    <div>
-                                        <h6 class="card-title mb-1">Galaxy S25 Ultra vs iPhone 16 Pro Max Speed Test</h6>
-                                        <p class="card-text video-stats mb-0">Nick Ackerman</p>
-                                        <p class="card-text video-stats">1.8M views • 5 days ago</p></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                        <div class="video-card">
-                            <a href="https://www.youtube.com/watch?v=6IFZH6PD-ZY" class="text-decoration-none text-dark">
-                            <img src="assets/thumbnail9.jpg" class="card-img-top" alt="Video Thumbnail">
-                            <div class="card-body p-2">
-                                <div class="d-flex mt-2">
-                                    <div class="channel-icon me-2">
-                                        <img src="assets/channels9.jpg" alt="">
-                                    </div>
-                                    <div>
-                                        <h6 class="card-title mb-1">Los Angeles Wildfire | These People are Burning America! | Dhruv Rathee</h6>
-                                        <p class="card-text video-stats mb-0">Dhruv Rathee  </p>
-                                        <p class="card-text video-stats">1.1M views • 5 days ago</p></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                        <div class="video-card">
-                            <a href="https://www.youtube.com/watch?v=gJHiTmhRnG4" class="text-decoration-none text-dark">
-
-                            <img src="assets/thumbnail6.jpg" class="card-img-top" alt="Video Thumbnail">
-                            <div class="card-body p-2">
-                                <div class="d-flex mt-2">
-                                    <div class="channel-icon me-2">
-                                        <img src="assets/channel5.jpg" alt="">
-                                    </div>
-                                    <div>
-                                        <h6 class="card-title mb-1">IDs vs Classes in HTML: The Ultimate Beginner's Guide!</h6>
-                                        <p class="card-text video-stats mb-0">Code with Nidal</p>
-                                        <p class="card-text video-stats">2.8M views • 9 days ago</p></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                        <div class="video-card">
-                            <a href="https://www.youtube.com/watch?v=nLwML2PagbY"  class="text-decoration-none text-dark">
-                            <img src="assets/thumbnail10.jpg" class="card-img-top" alt="Video Thumbnail">
-                            <div class="card-body p-2">
-                                <div class="d-flex mt-2">
-                                    <div class="channel-icon me-2">
-                                        <img src="assets/channels10.jpg" alt="">
-                                    </div>
-                                    <div>
-                                        <h6 class="card-title mb-1">Mercedes-Benz “Chicken” MAGIC BODY CONTROL TV commercial</h6>
-                                        <p class="card-text video-stats mb-0">Mercedes-Benz</p>
-                                        <p class="card-text video-stats">1.8M views • 5 days ago</p></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                        <div class="video-card">
-                            <a href="https://www.youtube.com/watch?v=SPgixVcfiCE" class="text-decoration-none text-dark">
-                            <img src="assets/thumbnail11.jpg" class="card-img-top" alt="Video Thumbnail">
-                            <div class="card-body p-2">
-                                <div class="d-flex mt-2">
-                                    <div class="channel-icon me-2">
-                                        <img src="assets/channel11.jpg" alt="">
-                                    </div>
-                                    <div>
-                                        <h6 class="card-title mb-1">1470HP Bugatti Veyron | Forza Horizon 5 | Logitech g29 gameplay</h6>
-                                        <p class="card-text video-stats mb-0">SRT Style</p>
-                                        <p class="card-text video-stats">12M views • 30 days ago</p></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                        <div class="video-card">
-                            <a href="https://www.youtube.com/watch?v=XdIlDYfbvDU" class="text-decoration-none text-dark" >
-                            <img src="assets/thumbnail8.jpg" class="card-img-top" alt="Video Thumbnail">
-                            <div class="card-body p-2">
-                                <div class="d-flex mt-2">
-                                    <div class="channel-icon me-2"><img src="assets/channel8.jpg" alt=""></div>
-                                    <div>
-                                        <h6 class="card-title mb-1">The Only World Record That Cannot Be Broken...</h6>
-                                        <p class="card-text video-stats mb-0">Trend Central ✓ </p>
-                                        <p class="card-text video-stats">2.1M views • 2 weeks ago</p></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                
-                
-                
-                
-                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                        <div class="video-card">
-                            <a href="https://www.youtube.com/watch?v=NMThdHhrLoM" class="text-decoration-none text-dark">
-                            <img src="assets/thumbnail12.jpg" class="card-img-top" alt="Video Thumbnail">
-                            <div class="card-body p-2">
-                                <div class="d-flex mt-2">
-                                    <div class="channel-icon me-2">
-                                        <img src="assets/channel12.jpg" alt="">
-                                    </div>
-                                    <div>
-                                        <h6 class="card-title mb-1">BUGATTI CHIRON Pur Sport: ‘C’ the Drift</h6>
-                                        <p class="card-text video-stats mb-0">Bugatti</p>
-                                        <p class="card-text video-stats">15.8M views • 1 days ago</p></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                </div>
             </div>
         </div>
-        <div class="footer">
-            
-        </div>
+    </div>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-        <script src="script.js"></script>
-        <script>
-            
-            // --------------
-            document.addEventListener('DOMContentLoaded', function() {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
             const toggleButton = document.querySelector('#toggleButton1').parentElement;
             const sidebar = document.querySelector('.sidebar');
             const mainContent = document.querySelector('.main-content');
             
-            // Set initial state for mobile
             if (window.innerWidth < 768) {
                 mainContent.classList.add('expanded');
             }
             
-            // Toggle button functionality
             toggleButton.addEventListener('click', function() {
                 if (window.innerWidth < 768) {
                     sidebar.classList.toggle('show');
@@ -393,7 +203,6 @@
                 }
             });
             
-            // Handle resize events
             window.addEventListener('resize', function() {
                 if (window.innerWidth >= 768) {
                     sidebar.classList.remove('show');
@@ -406,14 +215,9 @@
                 }
             });
         });
-        document.addEventListener('DOMContentLoaded', function() {
-    const logo = document.getElementById('youtubeLogo');
-    logo.addEventListener('click', function(e) {
-        e.preventDefault();
-        // Optional: Add custom behavior here
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-});
+    </script>
+</body>
+</html>
         </script>
     </body>
     </html>
