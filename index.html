@@ -183,12 +183,13 @@
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
+            justify-content: flex-end;
         }
         .controls .btn-control {
             background: #272727;
             color: #aaa;
             border: none;
-            padding: 8px 20px;
+            padding: 8px 18px;
             border-radius: 40px;
             font-size: 13px;
             font-weight: 500;
@@ -372,7 +373,7 @@
             }
             .controls {
                 padding: 12px 12px 0;
-                gap: 8px;
+                justify-content: center;
             }
             .controls .btn-control {
                 font-size: 12px;
@@ -417,7 +418,7 @@
                 <div class="channel-name">nar1</div>
                 <div class="channel-handle">@nar1</div>
                 <div class="channel-stats">
-                    <span><i class="fas fa-users"></i> <span id="subscribers">2.3 тыс.</span> подписчиков</span>
+                    <span><i class="fas fa-users"></i> <span id="subsDisplay">2.3 тыс.</span> подписчиков</span>
                     <span style="margin-left:12px;"><i class="fas fa-video"></i> 3 видео</span>
                 </div>
             </div>
@@ -436,31 +437,27 @@
 
     <!-- ===== КНОПКИ УПРАВЛЕНИЯ ===== -->
     <div class="controls">
-        <button class="btn-control" id="refreshViewsBtn">
-            <i class="fas fa-sync-alt"></i> Обновить просмотры
-        </button>
-        <button class="btn-control" id="refreshSubsBtn">
-            <i class="fas fa-users"></i> Обновить подписчиков
-        </button>
+        <button class="btn-control" id="refreshViewsBtn"><i class="fas fa-sync-alt"></i> Рандом просмотры</button>
+        <button class="btn-control" id="refreshSubsBtn"><i class="fas fa-users"></i> Рандом подписчики</button>
     </div>
 
     <!-- ===== СЕТКА ВИДЕО ===== -->
     <div class="video-grid">
 
-        <!-- ВИДЕО 1 (НОВОЕ): Tidal Wave 26% (ID: dFSVjVYHOoI) -->
+        <!-- ВИДЕО 1: Tidal Wave 26% (ID: dFSVjVYHOoI) -->
         <div class="video-card" onclick="window.open('https://www.youtube.com/watch?v=dFSVjVYHOoI', '_blank')">
             <div class="thumbnail">
                 <img src="https://img.youtube.com/vi/dFSVjVYHOoI/maxresdefault.jpg" alt="Tidal Wave 26%">
                 <img src="https://img.youtube.com/vi/dFSVjVYHOoI/hqdefault.jpg" alt="hover" class="hover-play">
                 <span class="play-hint"><i class="fas fa-play"></i> Смотреть</span>
-                <span class="duration">0:45</span>
+                <span class="duration">0:22</span>
             </div>
             <div class="video-info">
-                <img src="https://i.pinimg.com/736x/2e/99/2d/2e992d1138c6f58ea28151f874b0a5cf.jpg" alt="avatar" class="mini-avatar">
+                <img src="https://i.pinimg.com/736x/2e/99/2d/2e992d1138c6f58ea28151f874b0a5cf.jpg" alt="avatar" class="mini-avatar" onerror="this.style.background='#444'">
                 <div class="details">
                     <div class="title">💀 TIDAL WAVE 26% // BEST RECORD IN DLFF 💀</div>
                     <div class="channel-name">nar1</div>
-                    <div class="meta" id="views1">⏳</div>
+                    <div class="meta" id="views1">5.2 тыс. просмотров • 1 неделю назад</div>
                 </div>
             </div>
         </div>
@@ -478,7 +475,7 @@
                 <div class="details">
                     <div class="title">✨ ORBIT 100% // WTF FLUCKED FROM 77% ✨</div>
                     <div class="channel-name">nar1</div>
-                    <div class="meta" id="views2">⏳</div>
+                    <div class="meta" id="views2">12 тыс. просмотров • 2 дня назад</div>
                 </div>
             </div>
         </div>
@@ -496,7 +493,7 @@
                 <div class="details">
                     <div class="title">🔥 ORBIT 77% // РЕАКЦИЯ ПОСЛЕ СЛИВА</div>
                     <div class="channel-name">nar1</div>
-                    <div class="meta" id="views3">⏳</div>
+                    <div class="meta" id="views3">8.4 тыс. просмотров • 4 дня назад</div>
                 </div>
             </div>
         </div>
@@ -505,7 +502,7 @@
 
     <!-- ===== СКРИПТЫ ===== -->
     <script>
-        // Подписка
+        // ===== ПОДПИСКА =====
         document.getElementById('subscribeBtn').addEventListener('click', function() {
             this.classList.toggle('subscribed');
             if (this.textContent === 'Подписаться') {
@@ -545,27 +542,30 @@
             if (views3) views3.textContent = randomViews() + ' • ' + randomDays();
         }
 
-        // ===== РАНДОМНЫЕ ПОДПИСЧИКИ (от 100 до 100 млн) =====
+        // ===== РАНДОМНЫЕ ПОДПИСЧИКИ (от 1.2 тыс. до 9.9 млн) =====
         function randomSubscribers() {
-            const num = Math.floor(Math.random() * 100000000) + 100; // от 100 до 100 млн
+            const rand = Math.random();
+            let num;
 
-            if (num >= 1000000) {
-                return (num / 1000000).toFixed(1).replace('.0', '') + ' млн';
-            } else if (num >= 1000) {
+            if (rand < 0.7) {
+                // 70% — тысячи (от 1.2 тыс. до 999 тыс.)
+                num = Math.floor(Math.random() * 999000) + 1200;
                 return (num / 1000).toFixed(1).replace('.0', '') + ' тыс.';
             } else {
-                return num.toString();
+                // 30% — миллионы (от 1.0 млн до 9.9 млн)
+                num = (Math.random() * 8.9 + 1).toFixed(1);
+                return num + ' млн';
             }
         }
 
         function updateSubscribers() {
-            const el = document.getElementById('subscribers');
+            const el = document.getElementById('subsDisplay');
             if (el) {
                 el.textContent = randomSubscribers();
             }
         }
 
-        // ===== ЗАПУСК ПРИ ЗАГРУЗКЕ =====
+        // ===== ЗАПУСК =====
         updateViews();
         updateSubscribers();
 
