@@ -370,6 +370,24 @@
         </div>
     </nav>
 
+    <!-- ===== ШАПКА КАНАЛА ===== -->
+    <div class="channel-header">
+        <div class="channel-info">
+            <img src="https://i.pinimg.com/736x/2e/99/2d/2e992d1138c6f58ea28151f874b0a5cf.jpg" alt="avatar" class="channel-avatar" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23333%22/%3E%3Ccircle cx=%2250%22 cy=%2235%22 r=%2220%22 fill=%22%23555%22/%3E%3Ccircle cx=%2250%22 cy=%2275%22 r=%2225%22 fill=%22%23555%22/%3E%3C/svg%3E'">
+
+            <div>
+                <div class="channel-name">nar1</div>
+                <div class="channel-handle">@nar1</div>
+                <div class="channel-stats">
+                    <span><i class="fas fa-users"></i> 2.3 тыс. подписчиков</span>
+                    <span style="margin-left:12px;"><i class="fas fa-video"></i> 2 видео</span>
+                </div>
+            </div>
+
+            <button class="subscribe-btn" id="subscribeBtn">Подписаться</button>
+        </div>
+    </div>
+
     <!-- ===== ВКЛАДКИ ===== -->
     <div class="channel-tabs">
         <a href="#" class="active">Видео</a>
@@ -394,7 +412,7 @@
                 <div class="details">
                     <div class="title">✨ ORBIT 100% // WTF FLUCKED FROM 77% ✨</div>
                     <div class="channel-name">nar1</div>
-                    <div class="meta" id="views1">⏳ Загрузка...</div>
+                    <div class="meta" id="views1"></div>
                 </div>
             </div>
         </div>
@@ -412,7 +430,7 @@
                 <div class="details">
                     <div class="title">🔥 ORBIT 77% // РЕАКЦИЯ ПОСЛЕ СЛИВА</div>
                     <div class="channel-name">nar1</div>
-                    <div class="meta" id="views2">⏳ Загрузка...</div>
+                    <div class="meta" id="views2"></div>
                 </div>
             </div>
         </div>
@@ -431,7 +449,7 @@
                 <div class="details">
                     <div class="title">НАЗВАНИЕ ВИДЕО</div>
                     <div class="channel-name">nar1</div>
-                    <div class="meta" id="viewsX">⏳ Загрузка...</div>
+                    <div class="meta" id="viewsX"></div>
                 </div>
             </div>
         </div>
@@ -494,13 +512,12 @@
             }
         }
 
-        // Обновляем при загрузке
+        // Запускаем сразу при загрузке
         updateViews();
 
-        // И каждые 5 секунд меняем (чтобы при обновлении страницы всегда было разное)
+        // И каждые 5 секунд обновляем (чтобы при долгом просмотре менялось)
         setInterval(updateViews, 5000);
     </script>
 
 </body>
-</html>
 </html>
