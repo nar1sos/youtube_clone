@@ -176,6 +176,36 @@
             border-bottom-color: #ff0000;
         }
 
+        .controls {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 12px 24px 0;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .controls .btn-control {
+            background: #272727;
+            color: #aaa;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .controls .btn-control:hover {
+            background: #3a3a3a;
+            color: #fff;
+        }
+        .controls .btn-control i {
+            font-size: 14px;
+        }
+
         .video-grid {
             max-width: 1300px;
             margin: 0 auto;
@@ -340,6 +370,14 @@
             .navbar .search-box button {
                 padding: 6px 12px;
             }
+            .controls {
+                padding: 12px 12px 0;
+                gap: 8px;
+            }
+            .controls .btn-control {
+                font-size: 12px;
+                padding: 6px 14px;
+            }
         }
         @media (min-width: 769px) and (max-width: 1024px) {
             .video-grid {
@@ -379,8 +417,8 @@
                 <div class="channel-name">nar1</div>
                 <div class="channel-handle">@nar1</div>
                 <div class="channel-stats">
-                    <span><i class="fas fa-users"></i> 2.3 тыс. подписчиков</span>
-                    <span style="margin-left:12px;"><i class="fas fa-video"></i> 2 видео</span>
+                    <span><i class="fas fa-users"></i> <span id="subscribers">2.3 тыс.</span> подписчиков</span>
+                    <span style="margin-left:12px;"><i class="fas fa-video"></i> 3 видео</span>
                 </div>
             </div>
 
@@ -396,10 +434,38 @@
         <a href="#">О канале</a>
     </div>
 
+    <!-- ===== КНОПКИ УПРАВЛЕНИЯ ===== -->
+    <div class="controls">
+        <button class="btn-control" id="refreshViewsBtn">
+            <i class="fas fa-sync-alt"></i> Обновить просмотры
+        </button>
+        <button class="btn-control" id="refreshSubsBtn">
+            <i class="fas fa-users"></i> Обновить подписчиков
+        </button>
+    </div>
+
     <!-- ===== СЕТКА ВИДЕО ===== -->
     <div class="video-grid">
 
-        <!-- ВИДЕО 1: Orbit 100% (ID: JdMtdwCV9kU) -->
+        <!-- ВИДЕО 1 (НОВОЕ): Tidal Wave 26% (ID: dFSVjVYHOoI) -->
+        <div class="video-card" onclick="window.open('https://www.youtube.com/watch?v=dFSVjVYHOoI', '_blank')">
+            <div class="thumbnail">
+                <img src="https://img.youtube.com/vi/dFSVjVYHOoI/maxresdefault.jpg" alt="Tidal Wave 26%">
+                <img src="https://img.youtube.com/vi/dFSVjVYHOoI/hqdefault.jpg" alt="hover" class="hover-play">
+                <span class="play-hint"><i class="fas fa-play"></i> Смотреть</span>
+                <span class="duration">0:45</span>
+            </div>
+            <div class="video-info">
+                <img src="https://i.pinimg.com/736x/2e/99/2d/2e992d1138c6f58ea28151f874b0a5cf.jpg" alt="avatar" class="mini-avatar">
+                <div class="details">
+                    <div class="title">💀 TIDAL WAVE 26% // BEST RECORD IN DLFF 💀</div>
+                    <div class="channel-name">nar1</div>
+                    <div class="meta" id="views1">⏳</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ВИДЕО 2: Orbit 100% (ID: JdMtdwCV9kU) -->
         <div class="video-card" onclick="window.open('https://www.youtube.com/watch?v=JdMtdwCV9kU', '_blank')">
             <div class="thumbnail">
                 <img src="https://img.youtube.com/vi/JdMtdwCV9kU/maxresdefault.jpg" alt="Orbit 100%">
@@ -412,12 +478,12 @@
                 <div class="details">
                     <div class="title">✨ ORBIT 100% // WTF FLUCKED FROM 77% ✨</div>
                     <div class="channel-name">nar1</div>
-                    <div class="meta">12 тыс. просмотров • 2 дня назад</div>
+                    <div class="meta" id="views2">⏳</div>
                 </div>
             </div>
         </div>
 
-        <!-- ВИДЕО 2: Orbit 77% (ID: 3MDRkXsz62Q) -->
+        <!-- ВИДЕО 3: Orbit 77% (ID: 3MDRkXsz62Q) -->
         <div class="video-card" onclick="window.open('https://www.youtube.com/watch?v=3MDRkXsz62Q', '_blank')">
             <div class="thumbnail">
                 <img src="https://img.youtube.com/vi/3MDRkXsz62Q/maxresdefault.jpg" alt="Orbit 77%">
@@ -430,32 +496,16 @@
                 <div class="details">
                     <div class="title">🔥 ORBIT 77% // РЕАКЦИЯ ПОСЛЕ СЛИВА</div>
                     <div class="channel-name">nar1</div>
-                    <div class="meta">8.4 тыс. просмотров • 4 дня назад</div>
+                    <div class="meta" id="views3">⏳</div>
                 </div>
             </div>
         </div>
-
-<div class="video-card" onclick="window.open('https://www.youtube.com/watch?v=dFSVjVYHOoI', '_blank')">
-    <div class="thumbnail">
-        <img src="https://img.youtube.com/vi/dFSVjVYHOoI/maxresdefault.jpg" alt="Название">
-        <img src="https://img.youtube.com/vi/dFSVjVYHOoI/hqdefault.jpg" alt="hover" class="hover-play">
-        <span class="play-hint"><i class="fas fa-play"></i> Смотреть</span>
-        <span class="duration">ДЛИТЕЛЬНОСТЬ</span>
-    </div>
-    <div class="video-info">
-        <img src="https://i.pinimg.com/736x/2e/99/2d/2e992d1138c6f58ea28151f874b0a5cf.jpg" alt="avatar" class="mini-avatar">
-        <div class="details">
-            <div class="title">💀 TIDAL WAVE 26% // BEST RECORD IN DLFF 💀</div>
-            <div class="channel-name">nar1</div>
-            <div class="meta">просмотров • дата</div>
-        </div>
-    </div>
-</div>
 
     </div>
 
     <!-- ===== СКРИПТЫ ===== -->
     <script>
+        // Подписка
         document.getElementById('subscribeBtn').addEventListener('click', function() {
             this.classList.toggle('subscribed');
             if (this.textContent === 'Подписаться') {
@@ -463,6 +513,77 @@
             } else {
                 this.textContent = 'Подписаться';
             }
+        });
+
+        // ===== РАНДОМНЫЕ ПРОСМОТРЫ =====
+        function randomViews() {
+            const formats = [
+                () => (Math.floor(Math.random() * 9) + 1) + '.' + Math.floor(Math.random() * 9) + ' тыс. просмотров',
+                () => Math.floor(Math.random() * 9) + Math.floor(Math.random() * 9) + '.' + Math.floor(Math.random() * 9) + ' тыс. просмотров',
+                () => Math.floor(Math.random() * 9) + Math.floor(Math.random() * 9) + Math.floor(Math.random() * 9) + '.' + Math.floor(Math.random() * 9) + ' тыс. просмотров',
+                () => (Math.floor(Math.random() * 9) + 1) + '.' + Math.floor(Math.random() * 9) + ' млн просмотров'
+            ];
+            return formats[Math.floor(Math.random() * formats.length)]();
+        }
+
+        function randomDays() {
+            const days = [
+                'сегодня', '1 день назад', '2 дня назад', '3 дня назад',
+                '4 дня назад', '5 дней назад', '6 дней назад',
+                '1 неделю назад', '2 недели назад', '3 недели назад'
+            ];
+            return days[Math.floor(Math.random() * days.length)];
+        }
+
+        function updateViews() {
+            const views1 = document.getElementById('views1');
+            const views2 = document.getElementById('views2');
+            const views3 = document.getElementById('views3');
+
+            if (views1) views1.textContent = randomViews() + ' • ' + randomDays();
+            if (views2) views2.textContent = randomViews() + ' • ' + randomDays();
+            if (views3) views3.textContent = randomViews() + ' • ' + randomDays();
+        }
+
+        // ===== РАНДОМНЫЕ ПОДПИСЧИКИ (от 100 до 100 млн) =====
+        function randomSubscribers() {
+            const num = Math.floor(Math.random() * 100000000) + 100; // от 100 до 100 млн
+
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(1).replace('.0', '') + ' млн';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(1).replace('.0', '') + ' тыс.';
+            } else {
+                return num.toString();
+            }
+        }
+
+        function updateSubscribers() {
+            const el = document.getElementById('subscribers');
+            if (el) {
+                el.textContent = randomSubscribers();
+            }
+        }
+
+        // ===== ЗАПУСК ПРИ ЗАГРУЗКЕ =====
+        updateViews();
+        updateSubscribers();
+
+        // ===== КНОПКИ =====
+        document.getElementById('refreshViewsBtn').addEventListener('click', function() {
+            updateViews();
+            const icon = this.querySelector('i');
+            icon.style.transition = 'transform 0.5s';
+            icon.style.transform = 'rotate(360deg)';
+            setTimeout(() => { icon.style.transform = 'rotate(0deg)'; }, 500);
+        });
+
+        document.getElementById('refreshSubsBtn').addEventListener('click', function() {
+            updateSubscribers();
+            const icon = this.querySelector('i');
+            icon.style.transition = 'transform 0.5s';
+            icon.style.transform = 'rotate(360deg)';
+            setTimeout(() => { icon.style.transform = 'rotate(0deg)'; }, 500);
         });
     </script>
 
