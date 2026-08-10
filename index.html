@@ -301,6 +301,36 @@
             font-size: 13px;
         }
 
+        /* Кнопка обновления статистики */
+        .refresh-btn-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 8px 24px 0;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .refresh-btn {
+            background: #272727;
+            color: #aaa;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .refresh-btn:hover {
+            background: #3a3a3a;
+            color: #fff;
+        }
+        .refresh-btn i {
+            font-size: 14px;
+        }
+
         @media (max-width: 768px) {
             .channel-info {
                 flex-direction: column;
@@ -339,6 +369,9 @@
             }
             .navbar .search-box button {
                 padding: 6px 12px;
+            }
+            .refresh-btn-container {
+                padding: 8px 12px 0;
             }
         }
         @media (min-width: 769px) and (max-width: 1024px) {
@@ -394,6 +427,13 @@
         <a href="#">Плейлисты</a>
         <a href="#">Shorts</a>
         <a href="#">О канале</a>
+    </div>
+
+    <!-- ===== КНОПКА ОБНОВЛЕНИЯ ===== -->
+    <div class="refresh-btn-container">
+        <button class="refresh-btn" id="refreshBtn">
+            <i class="fas fa-sync-alt"></i> Обновить статистику
+        </button>
     </div>
 
     <!-- ===== СЕТКА ВИДЕО ===== -->
@@ -468,55 +508,86 @@
             }
         });
 
-        // ===== РАНДОМНЫЕ ПРОСМОТРЫ =====
+        // ===== РАНДОМНЫЕ ПРОСМОТРЫ С СОХРАНЕНИЕМ =====
+
         function randomViews() {
             const formats = [
-                // тысячи
                 () => (Math.floor(Math.random() * 9) + 1) + '.' + Math.floor(Math.random() * 9) + ' тыс. просмотров',
-                // десятки тысяч
                 () => Math.floor(Math.random() * 9) + Math.floor(Math.random() * 9) + '.' + Math.floor(Math.random() * 9) + ' тыс. просмотров',
-                // сотни тысяч
                 () => Math.floor(Math.random() * 9) + Math.floor(Math.random() * 9) + Math.floor(Math.random() * 9) + '.' + Math.floor(Math.random() * 9) + ' тыс. просмотров',
-                // миллионы
                 () => (Math.floor(Math.random() * 9) + 1) + '.' + Math.floor(Math.random() * 9) + ' млн просмотров'
             ];
-
             const format = formats[Math.floor(Math.random() * formats.length)];
             return format();
         }
 
         function randomDays() {
             const days = [
-                'сегодня',
-                '1 день назад',
-                '2 дня назад',
-                '3 дня назад',
-                '4 дня назад',
-                '5 дней назад',
-                '6 дней назад',
-                '1 неделю назад',
-                '2 недели назад'
+                'сегодня', '1 день назад', '2 дня назад', '3 дня назад',
+                '4 дня назад', '5 дней назад', '6 дней назад',
+                '1 неделю назад', '2 недели назад'
             ];
             return days[Math.floor(Math.random() * days.length)];
         }
 
-        function updateViews() {
-            const views1 = document.getElementById('views1');
-            const views2 = document.getElementById('views2');
+        // Ключи для localStorage
+        const STORAGE_KEY = 'gdtube_views';
 
-            if (views1) {
-                views1.textContent = randomViews() + ' • ' + randomDays();
+        // Загружаем сохранённые данные или создаём новые
+        function loadOrGenerateViews() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                try {
+                    return JSON.parse(saved);
+                } catch (e) {
+                    // Если данные битые — генерируем новые
+                    return generateNewViews();
+                }
             }
-            if (views2) {
-                views2.textContent = randomViews() + ' • ' + randomDays();
-            }
+            return generateNewViews();
         }
 
-        // Запускаем сразу при загрузке
-        updateViews();
+        function generateNewViews() {
+            const data = {
+                views1: randomViews() + ' • ' + randomDays(),
+                views2: randomViews() + ' • ' + randomDays()
+            };
+            // Сохраняем в localStorage
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            return data;
+        }
 
-        // И каждые 5 секунд обновляем (чтобы при долгом просмотре менялось)
-        setInterval(updateViews, 5000);
+        // Обновить данные и сохранить
+        function refreshViews() {
+            const newData = generateNewViews();
+            updateDisplay(newData);
+        }
+
+        // Отобразить данные на странице
+        function updateDisplay(data) {
+            const views1 = document.getElementById('views1');
+            const views2 = document.getElementById('views2');
+            if (views1) views1.textContent = data.views1;
+            if (views2) views2.textContent = data.views2;
+        }
+
+        // ===== ЗАПУСК =====
+
+        // Загружаем данные и показываем
+        const viewsData = loadOrGenerateViews();
+        updateDisplay(viewsData);
+
+        // При клике на кнопку — обновляем
+        document.getElementById('refreshBtn').addEventListener('click', function() {
+            refreshViews();
+            // Анимация иконки обновления
+            const icon = this.querySelector('i');
+            icon.style.transition = 'transform 0.5s';
+            icon.style.transform = 'rotate(360deg)';
+            setTimeout(() => {
+                icon.style.transform = 'rotate(0deg)';
+            }, 500);
+        });
     </script>
 
 </body>
