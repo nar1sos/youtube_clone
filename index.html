@@ -566,11 +566,11 @@
             document.getElementById('views3').textContent = data.views3;
         }
 
-        // ===== РАНДОМНЫЕ ПОДПИСЧИКИ =====
+        // ===== РАНДОМНЫЕ ПОДПИСЧИКИ (от 1.0 тыс. до 9.9 млн) =====
         function randomSubscribers() {
             const rand = Math.random();
             if (rand < 0.7) {
-                const num = Math.floor(Math.random() * 999000) + 1200;
+                const num = Math.floor(Math.random() * 999000) + 1000;
                 return (num / 1000).toFixed(1).replace('.0', '') + ' тыс.';
             } else {
                 return (Math.random() * 8.9 + 1).toFixed(1) + ' млн';
@@ -585,7 +585,6 @@
 
         // ===== ЗАГРУЗКА СОХРАНЁННЫХ ДАННЫХ =====
         function loadAllData() {
-            // Просмотры
             const views = loadData('views', null);
             if (views) {
                 document.getElementById('views1').textContent = views.views1;
@@ -595,7 +594,6 @@
                 updateViews();
             }
 
-            // Подписчики
             const subs = loadData('subs', null);
             if (subs) {
                 document.getElementById('subsDisplay').textContent = subs;
