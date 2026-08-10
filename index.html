@@ -190,7 +190,7 @@
             border-radius: 12px;
             overflow: hidden;
             transition: transform 0.2s ease;
-            cursor: default;
+            cursor: pointer;
         }
         .video-card:hover {
             transform: scale(1.03);
@@ -301,36 +301,6 @@
             font-size: 13px;
         }
 
-        /* Кнопка обновления статистики */
-        .refresh-btn-container {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 8px 24px 0;
-            display: flex;
-            justify-content: flex-end;
-        }
-        .refresh-btn {
-            background: #272727;
-            color: #aaa;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 40px;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .refresh-btn:hover {
-            background: #3a3a3a;
-            color: #fff;
-        }
-        .refresh-btn i {
-            font-size: 14px;
-        }
-
         @media (max-width: 768px) {
             .channel-info {
                 flex-direction: column;
@@ -369,9 +339,6 @@
             }
             .navbar .search-box button {
                 padding: 6px 12px;
-            }
-            .refresh-btn-container {
-                padding: 8px 12px 0;
             }
         }
         @media (min-width: 769px) and (max-width: 1024px) {
@@ -429,22 +396,15 @@
         <a href="#">О канале</a>
     </div>
 
-    <!-- ===== КНОПКА ОБНОВЛЕНИЯ ===== -->
-    <div class="refresh-btn-container">
-        <button class="refresh-btn" id="refreshBtn">
-            <i class="fas fa-sync-alt"></i> Обновить статистику
-        </button>
-    </div>
-
     <!-- ===== СЕТКА ВИДЕО ===== -->
     <div class="video-grid">
 
         <!-- ВИДЕО 1: Orbit 100% (ID: JdMtdwCV9kU) -->
-        <div class="video-card">
+        <div class="video-card" onclick="window.open('https://www.youtube.com/watch?v=JdMtdwCV9kU', '_blank')">
             <div class="thumbnail">
                 <img src="https://img.youtube.com/vi/JdMtdwCV9kU/maxresdefault.jpg" alt="Orbit 100%">
                 <img src="https://img.youtube.com/vi/JdMtdwCV9kU/hqdefault.jpg" alt="hover" class="hover-play">
-                <span class="play-hint"><i class="fas fa-play"></i> Наведи</span>
+                <span class="play-hint"><i class="fas fa-play"></i> Смотреть</span>
                 <span class="duration">0:30</span>
             </div>
             <div class="video-info">
@@ -452,17 +412,17 @@
                 <div class="details">
                     <div class="title">✨ ORBIT 100% // WTF FLUCKED FROM 77% ✨</div>
                     <div class="channel-name">nar1</div>
-                    <div class="meta" id="views1"></div>
+                    <div class="meta">12 тыс. просмотров • 2 дня назад</div>
                 </div>
             </div>
         </div>
 
         <!-- ВИДЕО 2: Orbit 77% (ID: 3MDRkXsz62Q) -->
-        <div class="video-card">
+        <div class="video-card" onclick="window.open('https://www.youtube.com/watch?v=3MDRkXsz62Q', '_blank')">
             <div class="thumbnail">
                 <img src="https://img.youtube.com/vi/3MDRkXsz62Q/maxresdefault.jpg" alt="Orbit 77%">
                 <img src="https://img.youtube.com/vi/3MDRkXsz62Q/hqdefault.jpg" alt="hover" class="hover-play">
-                <span class="play-hint"><i class="fas fa-play"></i> Наведи</span>
+                <span class="play-hint"><i class="fas fa-play"></i> Смотреть</span>
                 <span class="duration">0:22</span>
             </div>
             <div class="video-info">
@@ -470,18 +430,18 @@
                 <div class="details">
                     <div class="title">🔥 ORBIT 77% // РЕАКЦИЯ ПОСЛЕ СЛИВА</div>
                     <div class="channel-name">nar1</div>
-                    <div class="meta" id="views2"></div>
+                    <div class="meta">8.4 тыс. просмотров • 4 дня назад</div>
                 </div>
             </div>
         </div>
 
         <!-- ===== ДОБАВЛЯЙ НОВЫЕ ВИДЕО ЗДЕСЬ ===== -->
         <!--
-        <div class="video-card">
+        <div class="video-card" onclick="window.open('https://www.youtube.com/watch?v=ID_ВИДЕО', '_blank')">
             <div class="thumbnail">
                 <img src="https://img.youtube.com/vi/ID_ВИДЕО/maxresdefault.jpg" alt="Название">
                 <img src="https://img.youtube.com/vi/ID_ВИДЕО/hqdefault.jpg" alt="hover" class="hover-play">
-                <span class="play-hint"><i class="fas fa-play"></i> Наведи</span>
+                <span class="play-hint"><i class="fas fa-play"></i> Смотреть</span>
                 <span class="duration">0:30</span>
             </div>
             <div class="video-info">
@@ -489,7 +449,7 @@
                 <div class="details">
                     <div class="title">НАЗВАНИЕ ВИДЕО</div>
                     <div class="channel-name">nar1</div>
-                    <div class="meta" id="viewsX"></div>
+                    <div class="meta">просмотров • дата</div>
                 </div>
             </div>
         </div>
@@ -506,87 +466,6 @@
             } else {
                 this.textContent = 'Подписаться';
             }
-        });
-
-        // ===== РАНДОМНЫЕ ПРОСМОТРЫ С СОХРАНЕНИЕМ =====
-
-        function randomViews() {
-            const formats = [
-                () => (Math.floor(Math.random() * 9) + 1) + '.' + Math.floor(Math.random() * 9) + ' тыс. просмотров',
-                () => Math.floor(Math.random() * 9) + Math.floor(Math.random() * 9) + '.' + Math.floor(Math.random() * 9) + ' тыс. просмотров',
-                () => Math.floor(Math.random() * 9) + Math.floor(Math.random() * 9) + Math.floor(Math.random() * 9) + '.' + Math.floor(Math.random() * 9) + ' тыс. просмотров',
-                () => (Math.floor(Math.random() * 9) + 1) + '.' + Math.floor(Math.random() * 9) + ' млн просмотров'
-            ];
-            const format = formats[Math.floor(Math.random() * formats.length)];
-            return format();
-        }
-
-        function randomDays() {
-            const days = [
-                'сегодня', '1 день назад', '2 дня назад', '3 дня назад',
-                '4 дня назад', '5 дней назад', '6 дней назад',
-                '1 неделю назад', '2 недели назад'
-            ];
-            return days[Math.floor(Math.random() * days.length)];
-        }
-
-        // Ключи для localStorage
-        const STORAGE_KEY = 'gdtube_views';
-
-        // Загружаем сохранённые данные или создаём новые
-        function loadOrGenerateViews() {
-            const saved = localStorage.getItem(STORAGE_KEY);
-            if (saved) {
-                try {
-                    return JSON.parse(saved);
-                } catch (e) {
-                    // Если данные битые — генерируем новые
-                    return generateNewViews();
-                }
-            }
-            return generateNewViews();
-        }
-
-        function generateNewViews() {
-            const data = {
-                views1: randomViews() + ' • ' + randomDays(),
-                views2: randomViews() + ' • ' + randomDays()
-            };
-            // Сохраняем в localStorage
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-            return data;
-        }
-
-        // Обновить данные и сохранить
-        function refreshViews() {
-            const newData = generateNewViews();
-            updateDisplay(newData);
-        }
-
-        // Отобразить данные на странице
-        function updateDisplay(data) {
-            const views1 = document.getElementById('views1');
-            const views2 = document.getElementById('views2');
-            if (views1) views1.textContent = data.views1;
-            if (views2) views2.textContent = data.views2;
-        }
-
-        // ===== ЗАПУСК =====
-
-        // Загружаем данные и показываем
-        const viewsData = loadOrGenerateViews();
-        updateDisplay(viewsData);
-
-        // При клике на кнопку — обновляем
-        document.getElementById('refreshBtn').addEventListener('click', function() {
-            refreshViews();
-            // Анимация иконки обновления
-            const icon = this.querySelector('i');
-            icon.style.transition = 'transform 0.5s';
-            icon.style.transform = 'rotate(360deg)';
-            setTimeout(() => {
-                icon.style.transform = 'rotate(0deg)';
-            }, 500);
         });
     </script>
 
