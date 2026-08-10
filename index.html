@@ -418,7 +418,7 @@
                 <div class="channel-name">nar1</div>
                 <div class="channel-handle">@nar1</div>
                 <div class="channel-stats">
-                    <span><i class="fas fa-users"></i> <span id="subsDisplay">2.3 тыс.</span> подписчиков</span>
+                    <span><i class="fas fa-users"></i> <span id="subsDisplay"></span> подписчиков</span>
                     <span style="margin-left:12px;"><i class="fas fa-video"></i> 3 видео</span>
                 </div>
             </div>
@@ -457,7 +457,7 @@
                 <div class="details">
                     <div class="title">💀 TIDAL WAVE 26% // BEST RECORD IN DLFF 💀</div>
                     <div class="channel-name">nar1</div>
-                    <div class="meta" id="views1">5.2 тыс. просмотров • 1 неделю назад</div>
+                    <div class="meta" id="views1"></div>
                 </div>
             </div>
         </div>
@@ -475,7 +475,7 @@
                 <div class="details">
                     <div class="title">✨ ORBIT 100% // WTF FLUCKED FROM 77% ✨</div>
                     <div class="channel-name">nar1</div>
-                    <div class="meta" id="views2">12 тыс. просмотров • 2 дня назад</div>
+                    <div class="meta" id="views2"></div>
                 </div>
             </div>
         </div>
@@ -493,7 +493,7 @@
                 <div class="details">
                     <div class="title">🔥 ORBIT 77% // РЕАКЦИЯ ПОСЛЕ СЛИВА</div>
                     <div class="channel-name">nar1</div>
-                    <div class="meta" id="views3">8.4 тыс. просмотров • 4 дня назад</div>
+                    <div class="meta" id="views3"></div>
                 </div>
             </div>
         </div>
@@ -511,6 +511,23 @@
                 this.textContent = 'Подписаться';
             }
         });
+
+        // ===== СОХРАНЕНИЕ В LOCALSTORAGE =====
+        function saveData(key, data) {
+            localStorage.setItem('gdtube_' + key, JSON.stringify(data));
+        }
+
+        function loadData(key, fallback) {
+            const saved = localStorage.getItem('gdtube_' + key);
+            if (saved) {
+                try {
+                    return JSON.parse(saved);
+                } catch (e) {
+                    return fallback;
+                }
+            }
+            return fallback;
+        }
 
         // ===== РАНДОМНЫЕ ПРОСМОТРЫ =====
         function randomViews() {
@@ -532,42 +549,63 @@
             return days[Math.floor(Math.random() * days.length)];
         }
 
-        function updateViews() {
-            const views1 = document.getElementById('views1');
-            const views2 = document.getElementById('views2');
-            const views3 = document.getElementById('views3');
-
-            if (views1) views1.textContent = randomViews() + ' • ' + randomDays();
-            if (views2) views2.textContent = randomViews() + ' • ' + randomDays();
-            if (views3) views3.textContent = randomViews() + ' • ' + randomDays();
+        function generateViewsData() {
+            return {
+                views1: randomViews() + ' • ' + randomDays(),
+                views2: randomViews() + ' • ' + randomDays(),
+                views3: randomViews() + ' • ' + randomDays()
+            };
         }
 
-        // ===== РАНДОМНЫЕ ПОДПИСЧИКИ (от 1.2 тыс. до 9.9 млн) =====
+        function updateViews() {
+            const data = generateViewsData();
+            saveData('views', data);
+
+            document.getElementById('views1').textContent = data.views1;
+            document.getElementById('views2').textContent = data.views2;
+            document.getElementById('views3').textContent = data.views3;
+        }
+
+        // ===== РАНДОМНЫЕ ПОДПИСЧИКИ =====
         function randomSubscribers() {
             const rand = Math.random();
-            let num;
-
             if (rand < 0.7) {
-                // 70% — тысячи (от 1.2 тыс. до 999 тыс.)
-                num = Math.floor(Math.random() * 999000) + 1200;
+                const num = Math.floor(Math.random() * 999000) + 1200;
                 return (num / 1000).toFixed(1).replace('.0', '') + ' тыс.';
             } else {
-                // 30% — миллионы (от 1.0 млн до 9.9 млн)
-                num = (Math.random() * 8.9 + 1).toFixed(1);
-                return num + ' млн';
+                return (Math.random() * 8.9 + 1).toFixed(1) + ' млн';
             }
         }
 
         function updateSubscribers() {
-            const el = document.getElementById('subsDisplay');
-            if (el) {
-                el.textContent = randomSubscribers();
+            const val = randomSubscribers();
+            saveData('subs', val);
+            document.getElementById('subsDisplay').textContent = val;
+        }
+
+        // ===== ЗАГРУЗКА СОХРАНЁННЫХ ДАННЫХ =====
+        function loadAllData() {
+            // Просмотры
+            const views = loadData('views', null);
+            if (views) {
+                document.getElementById('views1').textContent = views.views1;
+                document.getElementById('views2').textContent = views.views2;
+                document.getElementById('views3').textContent = views.views3;
+            } else {
+                updateViews();
+            }
+
+            // Подписчики
+            const subs = loadData('subs', null);
+            if (subs) {
+                document.getElementById('subsDisplay').textContent = subs;
+            } else {
+                updateSubscribers();
             }
         }
 
         // ===== ЗАПУСК =====
-        updateViews();
-        updateSubscribers();
+        loadAllData();
 
         // ===== КНОПКИ =====
         document.getElementById('refreshViewsBtn').addEventListener('click', function() {
